@@ -33,7 +33,7 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
     /**
      * Adapter for the ListView
      */
-    InventoryCursorAdaptor mCursorAdapter;
+    InventoryCursorAdapter mCursorAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +59,7 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
 
         // Setup an Adapter to create a list item for each row of product data in the Cursor.
         // There is no product data yet (until the loader finishes) so pass in null for the Cursor.
-        mCursorAdapter = new InventoryCursorAdaptor(this, null);
+        mCursorAdapter = new InventoryCursorAdapter(this, null);
         productListView.setAdapter(mCursorAdapter);
 
         // Setup the item click listener
@@ -69,7 +69,7 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
                 // Create new intent to go to {@link EditorActivity}
                 Intent intent = new Intent(CatalogActivity.this, EditorActivity.class);
 
-                // Form the content URI that represents the specific producu that was clicked on,
+                // Form the content URI that represents the specific product that was clicked on,
                 // by appending the "id" (passed as input to this method) onto the
                 // {@link InventoryEntry#CONTENT_URI}.
                 // For example, the URI would be "content://com.example.admin.inventories/inventory/2"

@@ -63,6 +63,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     Button addQuantity, sellQuantity;
     int quantity = 0;
     String contact, imageString;
+    int flag = 0;
 
     /**
      * Content URI for the existing product (null if it's a new product)
@@ -98,7 +99,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
      * Boolean flag that keeps track of whether the product has been edited (true) or not (false)
      */
     private boolean mProductHasChanged = false;
-
     private ImageView mImageView;
     private TextView mTextView;
     private Uri mUri;
@@ -366,8 +366,19 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 TextUtils.isEmpty(contactString) && mUri == null) {
             // Since no fields were modified, we can return early without creating a new product.
             // No need to create ContentValues and no need to do any ContentProvider operations.
+            flag = 1;
             return;
         }
+
+        //Check if all the product details are filled, else
+        //prompt the user to fill them
+        if ((TextUtils.isEmpty(nameString)) || (TextUtils.isEmpty(priceString)) ||
+                (TextUtils.isEmpty(quantityString))) {
+            Toast.makeText(this, getString(R.string.prompt_fill_details), Toast.LENGTH_SHORT).show();
+            flag = 0;
+            return;
+        }
+
 
         //If no image is selected, set a placeholder image
         if (mUri == null) {
@@ -429,6 +440,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                         Toast.LENGTH_SHORT).show();
             }
         }
+        flag = 1;
     }
 
     @Override
@@ -463,7 +475,8 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 // Save product to database
                 saveProduct();
                 // Exit activity
-                finish();
+                if (flag == 1)
+                    finish();
                 return true;
             // Respond to a click on the "Delete" menu option
             case R.id.action_delete:

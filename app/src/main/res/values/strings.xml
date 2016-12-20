@@ -100,4 +100,10 @@
 
     <!-- Button name to contact seller -->
     <string name="button_order_product">Order more</string>
+
+    <!-- Button in list view to sell product -->
+    <string name="list_sell">Sell</string>
+
+    <!-- Prompt to fill all the product details -->
+    <string name="prompt_fill_details">"Please fill all product details"</string>
 </resources>
